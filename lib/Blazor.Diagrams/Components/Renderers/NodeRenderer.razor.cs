@@ -1,22 +1,22 @@
-﻿using Blazor.Diagrams.Core;
+﻿using System;
+using System.Threading.Tasks;
+using Blazor.Diagrams.Core;
 using Blazor.Diagrams.Core.Extensions;
 using Blazor.Diagrams.Core.Geometry;
 using Blazor.Diagrams.Core.Models;
 using Blazor.Diagrams.Extensions;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using System;
-using System.Threading.Tasks;
 
 namespace Blazor.Diagrams.Components.Renderers
 {
-    public class NodeRenderer : ComponentBase, IDisposable
+    public sealed partial class NodeRenderer : ComponentBase, IDisposable
     {
+        private bool _becameVisible;
+        private Type _componentType;
         private bool _shouldRender;
         private bool _isVisible = true;
-        private bool _becameVisible;
         private ElementReference _element;
         private DotNetObjectReference<NodeRenderer> _reference;
 
@@ -40,6 +40,18 @@ namespace Blazor.Diagrams.Components.Renderers
                 _ = JsRuntime.UnobserveResizes(_element);
 
             _reference?.Dispose();
+        }
+
+        private Type GetComponentType()
+        {
+            if (Node.GetType() != _componentType)
+            {
+                _componentType = Diagram.GetComponentForModel(Node) ??
+                    Diagram.Options.DefaultNodeComponent ??
+                    (Node.Layer == RenderLayer.HTML ? typeof(NodeWidget) : typeof(SvgNodeWidget));
+            }
+
+            return _componentType;
         }
 
         [JSInvokable]
@@ -79,44 +91,6 @@ namespace Blazor.Diagrams.Components.Renderers
             }
 
             return false;
-        }
-
-        protected override void BuildRenderTree(RenderTreeBuilder builder)
-        {
-            if (!_isVisible)
-                return;
-
-            var componentType = Diagram.GetComponentForModel(Node) ??
-                Diagram.Options.DefaultNodeComponent ??
-                (Node.Layer == RenderLayer.HTML ? typeof(NodeWidget) : typeof(SvgNodeWidget));
-
-            builder.OpenElement(0, Node.Layer == RenderLayer.HTML ? "div" : "g");
-            builder.AddAttribute(1, "class", $"node{(Node.Locked ? " locked" : string.Empty)}");
-            builder.AddAttribute(2, "data-node-id", Node.Id);
-
-            if (Node.Layer == RenderLayer.HTML)
-            {
-                builder.AddAttribute(3, "style", $"top: {Node.Position.Y.ToInvariantString()}px; left: {Node.Position.X.ToInvariantString()}px");
-            }
-            else
-            {
-                builder.AddAttribute(3, "transform", $"translate({Node.Position.X.ToInvariantString()} {Node.Position.Y.ToInvariantString()})");
-            }
-
-            builder.AddAttribute(4, "onmousedown", EventCallback.Factory.Create<MouseEventArgs>(this, OnMouseDown));
-            builder.AddEventStopPropagationAttribute(5, "onmousedown", true);
-            builder.AddAttribute(6, "onmouseup", EventCallback.Factory.Create<MouseEventArgs>(this, OnMouseUp));
-            builder.AddEventStopPropagationAttribute(7, "onmouseup", true);
-            builder.AddAttribute(8, "ontouchstart", EventCallback.Factory.Create<TouchEventArgs>(this, OnTouchStart));
-            builder.AddEventStopPropagationAttribute(9, "ontouchstart", true);
-            builder.AddAttribute(10, "ontouchend", EventCallback.Factory.Create<TouchEventArgs>(this, OnTouchEnd));
-            builder.AddEventStopPropagationAttribute(11, "ontouchend", true);
-            builder.AddEventPreventDefaultAttribute(12, "ontouchend", true);
-            builder.AddElementReferenceCapture(13, value => _element = value);
-            builder.OpenComponent(14, componentType);
-            builder.AddAttribute(15, "Node", Node);
-            builder.CloseComponent();
-            builder.CloseElement();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

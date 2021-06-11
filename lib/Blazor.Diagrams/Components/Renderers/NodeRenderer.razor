@@ -1,0 +1,40 @@
+﻿@if (_isVisible)
+{
+    if (Node.Layer == RenderLayer.HTML)
+    {
+        <div @onmousedown="@OnMouseDown" @onmousedown:stopPropagation
+             @onmouseup="@OnMouseUp" @onmouseup:stopPropagation
+             @ontouchend="@OnTouchEnd" @ontouchend:preventDefault @ontouchend:stopPropagation
+             @ontouchstart="@OnTouchStart" @ontouchstart:stopPropagation
+             @ref="@_element"
+             class="node @(Node.Locked ? "locked" : string.Empty)"
+             data-node-id="@(Node.Id)"
+             style="top: @($"{Node.Position.Y.ToInvariantString()}px");
+                    left: @($"{Node.Position.X.ToInvariantString()}px");">
+
+            @{
+                __builder.OpenComponent(0, GetComponentType());
+                __builder.AddAttribute(1, "Node", Node);
+                __builder.CloseComponent();
+            }
+        </div>
+    }
+    else
+    {
+        <g @onmousedown="@OnMouseDown" @onmousedown:stopPropagation
+           @onmouseup="@OnMouseUp" @onmouseup:stopPropagation
+           @ontouchend="@OnTouchEnd" @ontouchend:preventDefault @ontouchend:stopPropagation
+           @ontouchstart="@OnTouchStart" @ontouchstart:stopPropagation
+           @ref="@_element"
+           class="node @(Node.Locked ? "locked" : string.Empty)"
+           data-node-id="@(Node.Id)"
+           transform="translate(@(Node.Position.X.ToInvariantString()) @(Node.Position.Y.ToInvariantString()))">
+
+            @{
+                __builder.OpenComponent(0, GetComponentType());
+                __builder.AddAttribute(1, "Node", Node);
+                __builder.CloseComponent();
+            }
+        </g>
+    }
+}
