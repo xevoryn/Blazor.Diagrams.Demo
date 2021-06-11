@@ -33,6 +33,7 @@ namespace Blazor.Diagrams.Components.Renderers
         {
             Port.Changed -= PortCollection.UpdatePorts;
             PortCollection.OnUpdate -= OnPortChanged;
+            PortCollection.PortRenderers.Remove(this);
         }
 
         protected override void OnInitialized()
@@ -71,12 +72,12 @@ namespace Blazor.Diagrams.Components.Renderers
             var allPorts = Diagram.Nodes.SelectMany(n => n.Ports)
                 .Union(Diagram.Groups.SelectMany(g => g.Ports));
 
+            var relativePt = Diagram.GetRelativeMousePoint(clientX, clientY);
             foreach (var port in allPorts)
             {
                 if (!port.Initialized)
                     continue;
 
-                var relativePt = Diagram.GetRelativeMousePoint(clientX, clientY);
                 if (port.GetBounds().ContainsPoint(relativePt))
                     return port;
             }

@@ -1,7 +1,7 @@
 ﻿@if (Port.Parent.Layer == RenderLayer.HTML)
 {
     <div @ref="@_element"
-         class="@($"port {Port.Alignment.ToString().ToLowerInvariant()} {(Port.Links.Count > 0 ? "has-links" : "")} {Class}")"
+         class="port @(Port.Alignment.ToString().ToLowerInvariant()) @(Port.Links.Count > 0 ? "has-links" : string.Empty) @(Class)"
          data-port-id="@(Port.Id)"
          @onmousedown="@OnMouseDown" @onmousedown:stopPropagation
          @onmouseup="@OnMouseUp" @onmouseup:stopPropagation
@@ -14,7 +14,7 @@
 else
 {
     <g @ref="@_element"
-       class="@($"port {Port.Alignment.ToString().ToLowerInvariant()} {(Port.Links.Count > 0 ? "has-links" : "")} {Class}")"
+       class="port @(Port.Alignment.ToString().ToLowerInvariant()) @(Port.Links.Count > 0 ? "has-links" : string.Empty) @(Class)"
        data-port-id="@(Port.Id)"
        @onmousedown="@OnMouseDown" @onmousedown:stopPropagation
        @onmouseup="@OnMouseUp" @onmouseup:stopPropagation
