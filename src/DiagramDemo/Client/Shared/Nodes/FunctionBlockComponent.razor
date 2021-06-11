@@ -1,4 +1,6 @@
-﻿<div class="function-block-container">
+﻿@using DiagramDemo.Client.Services
+
+<div class="function-block-container">
     <div class="title-container"
             style="--title-name-background-color: @Node.NameBackgroundColor;
                 --title-name-fore-color: @Node.NameForeColor;">
@@ -64,12 +66,13 @@
 
 
 @code {
-    private static RenderFragment<FunctionBlockNodeConnector> InputConnectorFragment = connector => __builder =>
+    protected RenderFragment<FunctionBlockNodeConnector> InputConnectorFragment => connector => __builder =>
     {
         <div class="input-connector-container"
              style="--input-text-background-color: @connector.TextBackgroundColor;">
 
-            <div class="input-port-container"
+            <div @onclick="(e => EventHandlerHelperInstance.OnPortClick(e, connector))"
+                 class="input-port-container"
                  style="--input-port-color: @connector.PortColor; --input-port-text-color: @connector.PortTextColor">
 
                 <PortRenderer Port="@connector.Port">
@@ -92,7 +95,7 @@
         </div>
     };
 
-    private static RenderFragment<FunctionBlockNodeConnector> OutputConnectorFragment = connector => __builder =>
+    protected RenderFragment<FunctionBlockNodeConnector> OutputConnectorFragment => connector => __builder =>
     {
         <div class="output-connector-container"
              style="--output-text-background-color: @connector.TextBackgroundColor;">
@@ -102,7 +105,8 @@
 
                 @connector.Description
             </div>
-            <div class="output-port-container"
+            <div @onclick="(e => EventHandlerHelperInstance.OnPortClick(e, connector))"
+                 class="output-port-container"
                  style="--output-port-color: @connector.PortColor; --output-port-text-color: @connector.PortTextColor">
 
                 <PortRenderer Port="@connector.Port">
@@ -114,4 +118,16 @@
             </div>
         </div>
     };
+
+    public EventHandlerHelper EventHandlerHelperInstance { get; set; } = new();
+    public class EventHandlerHelper
+    {
+        public void OnPortClick(MouseEventArgs e, FunctionBlockNodeConnector connector)
+        {
+            if (e.CtrlKey)
+                UIState.ToggleSelectedConnector(connector);
+            else
+                UIState.SetSelectedConnector(connector);
+        }
+    }
 }

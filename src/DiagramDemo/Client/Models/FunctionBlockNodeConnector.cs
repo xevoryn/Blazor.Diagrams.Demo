@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using Blazor.Diagrams.Core.Models;
+﻿using Blazor.Diagrams.Core.Models;
 using DiagramDemo.Client.Models.Nodes;
 using DiagramDemo.Client.Services;
 
