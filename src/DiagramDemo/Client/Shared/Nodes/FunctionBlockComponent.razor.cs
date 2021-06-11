@@ -29,6 +29,8 @@ namespace DiagramDemo.Client.Shared.Nodes
 
         private bool IsImageVisible() => !UIState.SelectedConnectors.Any(c => c.Node.Id == Node.Id && c.Connector.RowIndex <= 3);
 
+        private bool IsRunModeCycle() => Node.RunMode == "Y";
+
         protected override void OnAfterRender(bool firstRender)
         {
             PerfLoggr.Log($"FunctionBlockComponent({Node.Id}).OnAfterRender({firstRender})");
@@ -42,5 +44,10 @@ namespace DiagramDemo.Client.Shared.Nodes
         }
 
         private void OnNodeConnectorSelectionChanged() => StateHasChanged();
+
+        private static void OnPortClick(MouseEventArgs e, FunctionBlockNodeConnector connector)
+        {
+
+        }
     }
 }

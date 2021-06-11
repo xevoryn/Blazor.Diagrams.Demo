@@ -1,19 +1,38 @@
-﻿@using DiagramDemo.Client.Services
+﻿<div class="function-block-container">
+    <div class="title-container"
+            style="--title-name-background-color: @Node.NameBackgroundColor;
+                --title-name-fore-color: @Node.NameForeColor;">
+        @Node.Name
+    </div>
 
-<div class="function-block-container">
-    <FunctionBlockTitleComponent Name="@Node.Name"
-                                 NameBackgroundColor="@Node.NameBackgroundColor"
-                                 NameForeColor="@Node.NameForeColor" />
+    <div class="run-mode-container">
+        <div class="run-mode-node-id">@Node.ClusterNodeId</div>
+        <div class="run-mode @(Node.RunMode == "Y" ? "short" : "")">@Node.RunMode</div>
+        @if (Node.RunMode == "Y")
+        {
+            <div class="run-mode-cycle-settings frequency">@Node.CycleFrequency</div>
+            <div class="run-mode-cycle-settings offset">@Node.CycleOffset</div>
+            <div class="run-mode-cycle-settings priority">@Node.CyclePriority</div>
+        }
+        else
+        {
+            <div class="run-mode-cycle-settings dummy"></div>
+        }
+        <div class="run-mode-dummy"></div>
+    </div>
 
-    <FunctionBlockRunModeComponent CycleFrequency="@Node.CycleFrequency"
-                                   CycleOffset="@Node.CycleOffset"
-                                   CyclePriority="@Node.CyclePriority"
-                                   NodeId="@Node.ClusterNodeId"
-                                   RunMode="@Node.RunMode" />
-
-    <FunctionBlockImage ImageSource="@Node.ImageSrc"
-                        ImageText="@Node.ImageText"
-                        Visible="@IsImageVisible()" />
+    <div class="function-block-image-container @(IsImageVisible() ? "" : "invisible")">
+        <div class="function-block-image">
+            @if (string.IsNullOrEmpty(Node.ImageSrc))
+            {
+                <span>@Node.ImageText</span>
+            }
+            else
+            {
+                <img src="@Node.ImageSrc" />
+            }
+        </div>
+    </div>
 
     <CascadingValue IsFixed="true"
                     Value="_portCollection">
@@ -45,7 +64,10 @@
 		}
     </CascadingValue>
 
-    <FunctionBlockSelection IsSelected="@Node.Selected" />
+    @if (Node.Selected)
+    {
+        <div class="function-block-selection"></div>
+    }
 </div>
 
 
