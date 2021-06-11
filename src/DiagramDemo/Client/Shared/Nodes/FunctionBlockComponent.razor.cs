@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Linq;
+using Blazor.Diagrams.Services;
 using DiagramDemo.Client.Models.Nodes;
 using DiagramDemo.Client.Services;
 using DiagramDemo.Shared;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace DiagramDemo.Client.Shared.Nodes
 {
     public partial class FunctionBlockComponent : ComponentBase, IDisposable
     {
+        private PortCollection _portCollection;
+
+        [Inject]
+        private IJSRuntime JsRuntime { get; set; }
+
         [Parameter]
         public FunctionBlockNode Node { get; set; }
 
@@ -28,6 +35,7 @@ namespace DiagramDemo.Client.Shared.Nodes
         protected override void OnInitialized()
         {
             base.OnInitialized();
+            _portCollection = new(JsRuntime);
             Node.ConnectorSelectionChanged += OnNodeConnectorSelectionChanged;
         }
 

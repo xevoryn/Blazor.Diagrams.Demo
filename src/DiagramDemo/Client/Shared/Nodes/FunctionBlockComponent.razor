@@ -13,31 +13,35 @@
                         ImageText="@Node.ImageText"
                         Visible="@IsImageVisible()" />
 
-    @for (var i = 0; i < Node.Connectors.Count; i++)
-    {
-        var inputConnector = Node.Connectors[i][0];
-        var outputConnector = Node.Connectors[i][1];
+    <CascadingValue IsFixed="true"
+                    Value="_portCollection">
 
-        <div class="connector-row @(i == 3 ? "divider" : "") @(i == Node.Connectors.Count - 1 ? "last-row" : "")">
-            @if (inputConnector == null)
-            {
-                <div></div>
-            }
-            else
-            {
-                <FunctionBlockInputConnectorComponent NodeConnector="@inputConnector" />
-            }
+        @for (var i = 0; i < Node.Connectors.Count; i++)
+        {
+            var inputConnector = Node.Connectors[i][0];
+            var outputConnector = Node.Connectors[i][1];
 
-            @if (outputConnector == null)
-            {
-                <div></div>
-            }
-            else
-            {
-                <FunctionBlockOutputConnectorComponent NodeConnector="@outputConnector" />
-            }
-        </div>
-    }
+            <div class="connector-row @(i == 3 ? "divider" : "") @(i == Node.Connectors.Count - 1 ? "last-row" : "")">
+                @if (inputConnector == null)
+                {
+                    <div></div>
+                }
+                else
+                {
+                    <FunctionBlockInputConnectorComponent NodeConnector="@inputConnector" />
+                }
+
+                @if (outputConnector == null)
+                {
+                    <div></div>
+                }
+                else
+                {
+                    <FunctionBlockOutputConnectorComponent NodeConnector="@outputConnector" />
+                }
+            </div>
+        }
+    </CascadingValue>
 
     <FunctionBlockSelection IsSelected="@Node.Selected" />
 </div>

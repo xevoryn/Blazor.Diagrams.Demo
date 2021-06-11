@@ -2,11 +2,10 @@
     Node Title
     @foreach (var port in Node.Ports)
     {
-        <PortRenderer Port="port" Class="default"></PortRenderer>
+        <CascadingValue IsFixed="true"
+                        Value="@_portCollection">
+
+            <PortRenderer Port="port" Class="default" />
+        </CascadingValue>
     }
 </div>
-
-@code {
-    [Parameter]
-    public NodeModel Node { get; set; }
-}
