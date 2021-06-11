@@ -1,4 +1,6 @@
-﻿<div class="function-block-container">
+﻿@using DiagramDemo.Client.Services
+
+<div class="function-block-container">
     <FunctionBlockTitleComponent Name="@Node.Name"
                                  NameBackgroundColor="@Node.NameBackgroundColor"
                                  NameForeColor="@Node.NameForeColor" />
@@ -20,28 +22,76 @@
         {
             var inputConnector = Node.Connectors[i][0];
             var outputConnector = Node.Connectors[i][1];
+			
+			<div class="connector-row @(i == 3 ? "divider" : "") @(i == Node.Connectors.Count - 1 ? "last-row" : "")">
+				@if (inputConnector == null)
+				{
+					<div></div>
+				}
+				else
+				{
+					@InputConnectorFragment(inputConnector)
+				}
 
-            <div class="connector-row @(i == 3 ? "divider" : "") @(i == Node.Connectors.Count - 1 ? "last-row" : "")">
-                @if (inputConnector == null)
-                {
-                    <div></div>
-                }
-                else
-                {
-                    <FunctionBlockInputConnectorComponent NodeConnector="@inputConnector" />
-                }
-
-                @if (outputConnector == null)
-                {
-                    <div></div>
-                }
-                else
-                {
-                    <FunctionBlockOutputConnectorComponent NodeConnector="@outputConnector" />
-                }
-            </div>
-        }
+				@if (outputConnector == null)
+				{
+					<div></div>
+				}
+				else
+				{
+					@OutputConnectorFragment(outputConnector)
+				}
+			</div>
+		}
     </CascadingValue>
 
     <FunctionBlockSelection IsSelected="@Node.Selected" />
 </div>
+
+
+@code {
+    private static RenderFragment<FunctionBlockNodeConnector> InputConnectorFragment = connector => __builder =>
+    {
+        <div class="input-connector-container"
+             style="--input-text-background-color: @connector.TextBackgroundColor;">
+
+            <div class="input-port-container"
+                 style="--input-port-color: @connector.PortColor; --input-port-text-color: @connector.PortTextColor">
+
+                <PortRenderer Port="@connector.Port">
+                    <div>@connector.PortText</div>
+                </PortRenderer>
+            </div>
+            <div class="input-pooling-mode"
+                 style="--input-pooling-mode-color: @connector.PoolingModeColor;">
+
+                @connector.PoolingMode
+            </div>
+            <div class="input-description"
+                 style="--input-description-color: @connector.DescriptionColor;">
+
+                @connector.Description
+            </div>
+        </div>
+    };
+
+    private static RenderFragment<FunctionBlockNodeConnector> OutputConnectorFragment = connector => __builder =>
+    {
+        <div class="output-connector-container"
+             style="--output-text-background-color: @connector.TextBackgroundColor;">
+
+            <div class="output-description"
+                 style="--output-description-color: @connector.DescriptionColor;">
+
+                @connector.Description
+            </div>
+            <div class="output-port-container"
+                 style="--output-port-color: @connector.PortColor; --output-port-text-color: @connector.PortTextColor">
+
+                <PortRenderer Port="@connector.Port">
+                    <div>@connector.PortText</div>
+                </PortRenderer>
+            </div>
+        </div>
+    };
+}

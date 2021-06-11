@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
 using Blazor.Diagrams.Services;
+using DiagramDemo.Client.Models;
 using DiagramDemo.Client.Models.Nodes;
 using DiagramDemo.Client.Services;
 using DiagramDemo.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace DiagramDemo.Client.Shared.Nodes
 {
@@ -40,6 +42,5 @@ namespace DiagramDemo.Client.Shared.Nodes
         }
 
         private void OnNodeConnectorSelectionChanged() => StateHasChanged();
-
     }
 }

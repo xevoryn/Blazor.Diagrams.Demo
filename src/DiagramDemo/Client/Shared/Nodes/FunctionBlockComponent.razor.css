@@ -3,6 +3,10 @@
     --node-border-width: 1px;
 }
 
+::deep .port {
+    height: calc(2 * var(--canvas-grid-size) - 2 * 1px);
+}
+
 .function-block-container {
     background-color: white;
     border: var(--node-border-width) solid rgb(129, 129, 129);
@@ -24,3 +28,57 @@
     .connector-row.last-row {
         grid-template-rows: calc(2 * var(--canvas-grid-size) - var(--node-border-width));
     }
+
+.input-connector-container {
+    display: grid;
+    grid-template-columns: calc(var(--canvas-grid-size) - var(--node-border-width)) repeat(7, var(--canvas-grid-size));
+    grid-template-rows: 100%;
+}
+
+.input-port-container {
+    background-color: var(--input-port-color);
+    color: var(--input-port-text-color);
+    cursor: default;
+    grid-column: 1 / span 2;
+    margin: 1px 0;
+    text-align: center;
+}
+
+.input-pooling-mode {
+    background-color: var(--input-text-background-color);
+    color: var(--input-pooling-mode-color);
+    grid-column: 3 / span 2;
+    margin: 1px 0;
+    text-align: center;
+}
+
+.input-description {
+    background-color: var(--input-text-background-color);
+    color: var(--input-description-color);
+    grid-column: 5 / span 4;
+    margin: 1px 0;
+}
+
+.output-connector-container {
+    display: grid;
+    grid-template-columns: repeat(7, var(--canvas-grid-size)) calc(var(--canvas-grid-size) - var(--node-border-width));
+    grid-template-rows: 100%;
+}
+
+.output-port-container {
+    background-color: var(--output-port-color);
+    color: var(--output-port-text-color);
+    cursor: default;
+    grid-column: 7 / span 2;
+    margin: 1px 0;
+    text-align: center;
+}
+
+.output-description {
+    background-color: var(--output-text-background-color);
+    color: var(--output-description-color);
+    grid-column: 1 / span 6;
+    margin: 1px 0;
+    padding-right: 3px;
+    text-align: right;
+}
