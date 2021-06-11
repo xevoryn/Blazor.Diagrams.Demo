@@ -43,20 +43,12 @@
             var outputConnector = Node.Connectors[i][1];
 			
 			<div class="connector-row @(i == 3 ? "divider" : "") @(i == Node.Connectors.Count - 1 ? "last-row" : "")">
-				@if (inputConnector == null)
-				{
-					<div></div>
-				}
-				else
+				@if (inputConnector != null)
 				{
 					@InputConnectorFragment(inputConnector)
 				}
 
-				@if (outputConnector == null)
-				{
-					<div></div>
-				}
-				else
+				@if (outputConnector != null)
 				{
 					@OutputConnectorFragment(outputConnector)
 				}
@@ -81,7 +73,10 @@
                  style="--input-port-color: @connector.PortColor; --input-port-text-color: @connector.PortTextColor">
 
                 <PortRenderer Port="@connector.Port">
-                    <div>@connector.PortText</div>
+                    @if (!string.IsNullOrWhiteSpace(connector.PortText))
+                    {
+                        <div>@connector.PortText</div>
+                    }
                 </PortRenderer>
             </div>
             <div class="input-pooling-mode"
@@ -111,7 +106,10 @@
                  style="--output-port-color: @connector.PortColor; --output-port-text-color: @connector.PortTextColor">
 
                 <PortRenderer Port="@connector.Port">
-                    <div>@connector.PortText</div>
+                    @if (!string.IsNullOrWhiteSpace(connector.PortText))
+                    {
+                        <div>@connector.PortText</div>
+                    }
                 </PortRenderer>
             </div>
         </div>
