@@ -1,0 +1,15 @@
+﻿<div class="run-mode-container">
+    <div class="node-id">@NodeId</div>
+    <div class="run-mode @(IsRunModeCycle() ? "short" : "")">@RunMode</div>
+    @if (IsRunModeCycle())
+    {
+        <div class="cycle-settings frequency">@CycleFrequency</div>
+        <div class="cycle-settings offset">@CycleOffset</div>
+        <div class="cycle-settings priority">@CyclePriority</div>
+    }
+    else
+    {
+        <div class="cycle-settings dummy"></div>
+    }
+    <div class="dummy"></div>
+</div>

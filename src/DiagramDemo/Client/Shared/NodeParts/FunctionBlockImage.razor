@@ -1,0 +1,12 @@
+﻿<div class="function-block-image-container @(Visible ? "" : "invisible")">
+    <div class="function-block-image">
+        @if (string.IsNullOrEmpty(ImageSource))
+        {
+            <span>@ImageText</span>
+        }
+        else
+        {
+            <img src="@ImageSource" />
+        }
+    </div>
+</div>

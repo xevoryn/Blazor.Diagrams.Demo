@@ -1,0 +1,31 @@
+﻿.function-block-image-container {
+    height: 0;
+}
+
+    .function-block-image-container.invisible {
+        visibility: hidden;
+    }
+
+.function-block-image {
+    align-items: center;
+    background-color: white;
+    display: flex;
+    height: calc(8 * var(--canvas-grid-size) - 1px);
+    justify-content: center;
+    left: calc(2 * var(--canvas-grid-size));
+    overflow: hidden;
+    position: relative;
+    width: calc(12 * var(--canvas-grid-size));
+}
+
+    .function-block-image img {
+        height: calc(8 * var(--canvas-grid-size) - 1px);
+        width: calc(12 * var(--canvas-grid-size));
+    }
+
+    .function-block-image span {
+        font-size: calc(1.8 * var(--canvas-grid-size));
+        line-height: calc(2 * var(--canvas-grid-size));
+        padding: 10px;
+        text-align: center;
+    }

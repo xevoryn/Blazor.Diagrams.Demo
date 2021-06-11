@@ -1,0 +1,17 @@
+﻿<div class="connector-container"
+     style="--text-background-color: @NodeConnector.TextBackgroundColor;">
+
+    <div class="description"
+         style="--description-color: @NodeConnector.DescriptionColor;">
+
+        @NodeConnector.Description
+    </div>
+    <div class="port-container"
+         style="--port-color: @NodeConnector.PortColor; --port-text-color: @NodeConnector.PortTextColor"
+         @onclick="OnPortClick">
+
+        <PortRenderer Port="@NodeConnector.Port">
+            <div>@NodeConnector.PortText</div>
+        </PortRenderer>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿::deep {
+    --canvas-grid-size: 10px;
+    --node-border-width: 1px;
+}
+
+.function-block-container {
+    background-color: white;
+    border: var(--node-border-width) solid rgb(129, 129, 129);
+    font-size: calc(var(--canvas-grid-size) * 1.4);
+    width: calc(16 * var(--canvas-grid-size));
+}
+
+.connector-row {
+    display: grid;
+    grid-template-columns: repeat(2, calc(8 * var(--canvas-grid-size) - var(--node-border-width)));
+    grid-template-rows: calc(2 * var(--canvas-grid-size));
+}
+
+    .connector-row.divider {
+        border-bottom: 1px solid black;
+        grid-template-rows: calc(2 * var(--canvas-grid-size) - 1px);
+    }
+
+    .connector-row.last-row {
+        grid-template-rows: calc(2 * var(--canvas-grid-size) - var(--node-border-width));
+    }

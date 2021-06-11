@@ -1,0 +1,50 @@
+﻿.run-mode-container {
+    display: grid;
+    font-weight: bold;
+    grid-template-columns: calc(var(--canvas-grid-size) - var(--node-border-width)) repeat(14, var(--canvas-grid-size)) calc(var(--canvas-grid-size) - var(--node-border-width));
+    grid-template-rows: calc(2 * var(--canvas-grid-size) - var(--node-border-width));
+    text-align: center;
+}
+
+.node-id {
+    background-color: black;
+    color: white;
+    grid-column: 1 / span 6;
+    margin-right: 1px;
+}
+
+.run-mode {
+    background-color: lightgray;
+    color: navy;
+    grid-column: 7 / span 2;
+}
+
+    .run-mode.short {
+        margin-right: 1px;
+    }
+
+.cycle-settings {
+    background-color: lightgray;
+    margin-right: 1px;
+}
+
+    .cycle-settings.frequency {
+        grid-column: 9 / span 2;
+    }
+
+    .cycle-settings.offset {
+        grid-column: 11 / span 2;
+    }
+
+    .cycle-settings.priority {
+        grid-column: 13 / span 2;
+    }
+
+    .cycle-settings.dummy {
+        grid-column: 9 / span 6;
+    }
+
+.dummy {
+    background-color: lightgray;
+    grid-column: 15 / span 2;
+}

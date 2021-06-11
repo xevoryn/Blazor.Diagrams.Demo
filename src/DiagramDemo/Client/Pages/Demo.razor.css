@@ -1,0 +1,50 @@
+﻿.diagram-container {
+    display: grid;
+    flex: 1;
+    grid-template-columns: auto 15px;
+    grid-template-rows: auto 15px;
+}
+
+.select-container {
+    display: grid;
+    grid: auto / auto;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.select-box {
+    border: 1px solid blue;
+    background-color: #0000ff20;
+    height: var(--rect-height);
+    left: var(--rect-pos-x);
+    position: absolute;
+    top: var(--rect-pos-y);
+    width: var(--rect-width);
+    z-index: 100;
+}
+
+.background-grid {
+    background-image: linear-gradient(rgb(211, 211, 211) 1px, transparent 1px),
+                        linear-gradient( 90deg, rgb(211, 211, 211) 1px, rgba(220, 220, 220, 0.8) 1px);
+    background-size: var(--backgr-dimensions) var(--backgr-dimensions);
+    background-position-x: var(--backgr-pos-x);
+    background-position-y: var(--backgr-pos-y);
+    grid-column: 1;
+    grid-row: 1;
+}
+
+::deep .diagram-canvas {
+    cursor: default;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+::deep .scrollbar-container.horizontal {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+::deep .scrollbar-container.vertical {
+    grid-column: 2;
+    grid-row: 1;
+}

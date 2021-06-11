@@ -1,0 +1,33 @@
+﻿.connector-container {
+    display: grid;
+    grid-template-columns: calc(var(--canvas-grid-size) - var(--node-border-width)) repeat(7, var(--canvas-grid-size));
+    grid-template-rows: 100%;
+}
+
+.port-container {
+    background-color: var(--port-color);
+    color: var(--port-text-color);
+    cursor: default;
+    grid-column: 1 / span 2;
+    margin: 1px 0;
+    text-align: center;
+}
+
+.pooling-mode {
+    background-color: var(--text-background-color);
+    color: var(--pooling-mode-color);
+    grid-column: 3 / span 2;
+    margin: 1px 0;
+    text-align: center;
+}
+
+.description {
+    background-color: var(--text-background-color);
+    color: var(--description-color);
+    grid-column: 5 / span 4;
+    margin: 1px 0;
+}
+
+::deep .port {
+    height: calc(2 * var(--canvas-grid-size) - 2 * 1px);
+}

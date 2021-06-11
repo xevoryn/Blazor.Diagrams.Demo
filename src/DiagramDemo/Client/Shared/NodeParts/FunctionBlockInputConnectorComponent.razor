@@ -1,0 +1,22 @@
+﻿<div class="connector-container"
+     style="--text-background-color: @NodeConnector.TextBackgroundColor;">
+
+    <div @onclick="OnPortClick"
+         class="port-container"
+         style="--port-color: @NodeConnector.PortColor; --port-text-color: @NodeConnector.PortTextColor">
+
+        <PortRenderer Port="@NodeConnector.Port">
+            <div>@NodeConnector.PortText</div>
+        </PortRenderer>
+    </div>
+    <div class="pooling-mode"
+         style="--pooling-mode-color: @NodeConnector.PoolingModeColor;">
+
+        @NodeConnector.PoolingMode
+    </div>
+    <div class="description"
+         style="--description-color: @NodeConnector.DescriptionColor;">
+
+        @NodeConnector.Description
+    </div>
+</div>

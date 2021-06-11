@@ -1,0 +1,6 @@
+﻿div {
+    background-color: var(--name-background-color);
+    color: var(--name-fore-color);
+    line-height: calc(2 * var(--canvas-grid-size));
+    text-align: center;
+}

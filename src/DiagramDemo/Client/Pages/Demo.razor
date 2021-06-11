@@ -1,0 +1,21 @@
+@page "/"
+
+<div style="z-index: 10; border-bottom: 1px solid lightgray;">
+    <button class="btn btn-danger btn-sm m-sm-1" @onclick="DeleteSelectedNodes">Delete Selected Nodes</button>
+    <button class="btn btn-info btn-sm m-sm-1" @onclick="WriteLog">WriteLog</button>
+
+    <div>
+        <label>amount:</label>
+        <input @bind-value="@_blockSpawnAmount" type="number" />
+
+        <button class="btn btn-success btn-sm m-sm-1" @onclick="@(() => PerfTestAddSwitch())">Spawn Switches</button>
+        <button class="btn btn-success btn-sm m-sm-1" @onclick="@(() => PerfTestAddSonos())">Spawn Sonos</button>
+        <button class="btn btn-success btn-sm m-sm-1" @onclick="@(() => PerfTestAddSwitchAndSonos())">Spawn Switch & Sonos</button>
+    </div>
+</div>
+
+<div class="diagram-container">
+    <CascadingValue Value="@_diagram">
+        <DiagramCanvas />
+    </CascadingValue>
+</div>
