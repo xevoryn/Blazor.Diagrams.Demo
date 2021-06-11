@@ -17,6 +17,7 @@ namespace Blazor.Diagrams.Components.Renderers
         private Type _componentType;
         private bool _shouldRender;
         private bool _isVisible = true;
+        private bool _renderedTwice = false;
         private ElementReference _element;
         private DotNetObjectReference<NodeRenderer> _reference;
 
@@ -58,7 +59,7 @@ namespace Blazor.Diagrams.Components.Renderers
         public void OnResize(Size size)
         {
             // When the node becomes invisible (a.k.a unrendered), the size is zero
-            if (Size.Zero.Equals(size))
+            if (Size.Zero.Equals(size) || !_renderedTwice)
                 return;
 
             size = new Size(size.Width / Diagram.Zoom, size.Height / Diagram.Zoom);
@@ -102,6 +103,9 @@ namespace Blazor.Diagrams.Components.Renderers
                 _becameVisible = false;
                 await JsRuntime.ObserveResizes(_element, _reference);
             }
+
+            if (!firstRender && !_renderedTwice)
+                _renderedTwice = true;
         }
 
         private async void CheckVisibility()

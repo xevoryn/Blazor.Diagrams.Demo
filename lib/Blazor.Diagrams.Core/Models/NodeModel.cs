@@ -1,8 +1,8 @@
-﻿using Blazor.Diagrams.Core.Geometry;
-using Blazor.Diagrams.Core.Models.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Blazor.Diagrams.Core.Geometry;
+using Blazor.Diagrams.Core.Models.Base;
 
 namespace Blazor.Diagrams.Core.Models
 {
@@ -10,7 +10,7 @@ namespace Blazor.Diagrams.Core.Models
     {
         private readonly List<PortModel> _ports = new List<PortModel>();
         private readonly List<BaseLinkModel> _links = new List<BaseLinkModel>();
-        private Size? _size;
+        private Size? _size = Size.Zero;
 
         public event Action<NodeModel>? SizeChanged;
         public event Action<NodeModel>? Moving;
