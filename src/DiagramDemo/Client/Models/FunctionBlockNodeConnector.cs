@@ -38,19 +38,6 @@ namespace DiagramDemo.Client.Models
 
         public bool CanAttachTo(FunctionBlockNodeConnector nodeConnector) => DataflowValidator.CanAttachTo(Connector, nodeConnector.Connector);
 
-        private static double GetRelativeLuminance(string color)
-        {
-            var regex = new Regex(@"rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)");
-            var match = regex.Match(color);
-
-            var r = Convert.ToInt32(match.Groups[1].Value);
-            var g = Convert.ToInt32(match.Groups[2].Value);
-            var b = Convert.ToInt32(match.Groups[3].Value);
-
-            // https://en.wikipedia.org/wiki/Relative_luminance
-            return (0.2126 * r / 255) + (0.7152 * g / 255) + (0.0722 * b / 255);
-        }
-
         private void SetConnectorColors()
         {
             if (Selected)
@@ -101,7 +88,7 @@ namespace DiagramDemo.Client.Models
         public void SetPortColor(string color)
         {
             PortColor = color;
-            PortTextColor = GetRelativeLuminance(color) < 0.3 ? PortTextColorOnDarkBackground : PortTextColorDefault;
+            PortTextColor = Color.GetRelativeLuminance(color) < 0.3 ? PortTextColorOnDarkBackground : PortTextColorDefault;
         }
 
         public void SetSelection(bool isSelected)
