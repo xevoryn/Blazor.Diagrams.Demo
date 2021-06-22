@@ -1,0 +1,20 @@
+﻿.grid {
+    background-color: rgb(227, 227, 227);
+    grid-column: 1;
+    grid-row: 1;
+}
+
+    .grid.grid-visible {
+        background-size: var(--grid-dimensions) var(--grid-dimensions);
+        background-position-x: var(--grid-pos-x);
+        background-position-y: var(--grid-pos-y);
+    }
+
+        .grid.grid-visible.line {
+            background-image: linear-gradient(rgb(211, 211, 211) 1px, transparent 1px),
+                              linear-gradient(90deg, rgb(211, 211, 211) 1px, transparent 1px);
+        }
+
+        .grid.grid-visible.point {
+            background-image: radial-gradient(circle at 0 0, rgb(129, 129, 129) 1px, transparent 1px);
+        }

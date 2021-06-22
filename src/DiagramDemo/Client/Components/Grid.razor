@@ -1,0 +1,14 @@
+﻿@using System.Globalization;
+
+@if (Visible)
+{
+    <div class="grid grid-visible @(Mode == GridMode.Line ? "line" : "point")"
+         style="--grid-dimensions: @(Dimensions.ToString(CultureInfo.InvariantCulture))px;
+                --grid-pos-x: @(PosX.ToString(CultureInfo.InvariantCulture))px;
+                --grid-pos-y: @(PosY.ToString(CultureInfo.InvariantCulture))px;">
+    </div>
+}
+else
+{
+    <div class="grid"></div>
+}
