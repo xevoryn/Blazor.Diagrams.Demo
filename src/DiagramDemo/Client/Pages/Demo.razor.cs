@@ -4,6 +4,7 @@ using Blazor.Diagrams.Core;
 using Blazor.Diagrams.Core.Geometry;
 using Blazor.Diagrams.Core.Models;
 using Blazor.Diagrams.Core.Models.Base;
+using DiagramDemo.Client.Models;
 using DiagramDemo.Client.Models.Nodes;
 using DiagramDemo.Client.Models.Ports;
 using DiagramDemo.Client.Services;
@@ -21,6 +22,10 @@ namespace DiagramDemo.Client.Pages
 
         private int _blockSpawnAmount = 50;
         private Diagram _diagram;
+        private GridMode _gridMode;
+        private double _gridDimensions = DefaultGridSize * DefaultZoom;
+        private Point _gridPosition = Point.Zero;
+        private bool _gridVisible = true;
         private bool _hasMouseDownShiftKey;
         private int _spawnPointX = 20 - 200;
         private int _spawnPointY = 30;
@@ -73,7 +78,9 @@ namespace DiagramDemo.Client.Pages
 
             _diagram.Links.Added += OnDiagramLinksAdded;
             _diagram.MouseClick += OnDiagramMouseClick;
+            _diagram.PanChanged += OnDiagramPanChanged;
             _diagram.SelectionChanged += OnDiagramSelectionChanged;
+            _diagram.ZoomChanged += OnDiagramZoomChanged;
         }
 
         protected override void OnAfterRender(bool firstRender)
@@ -103,12 +110,25 @@ namespace DiagramDemo.Client.Pages
                 UIState.DeselectConnectors();
         }
 
+        private void OnDiagramPanChanged()
+        {
+            _gridPosition = _diagram.Pan;
+            InvokeAsync(StateHasChanged);
+        }
+
         private void OnDiagramSelectionChanged(SelectableModel model)
         {
-            // Da ein Connector (Port) kein SelectableModel ist und somit dessen Selektion nicht vom Diagramm verwaltet wird,
-            // können wir alle Connectors deselektieren wenn sich hier die Selektion ändert.
             if (model != null)
                 UIState.DeselectConnectors();
+        }
+
+        private void OnDiagramZoomChanged()
+        {
+            _gridPosition = _diagram.Pan;
+            _gridDimensions = DefaultGridSize * _diagram.Zoom;
+            _gridVisible = _diagram.Zoom > 0.5;
+
+            InvokeAsync(StateHasChanged);
         }
 
         protected override void OnInitialized()
@@ -185,6 +205,14 @@ namespace DiagramDemo.Client.Pages
                 _diagram.Nodes.Add(node);
                 PerfLoggr.Log($"  _diagram.Nodes.Add(node_{i})");
             }
+        }
+
+        private void ToggleGridMode()
+        {
+            if (_gridMode == GridMode.Line)
+                _gridMode = GridMode.Point;
+            else
+                _gridMode = GridMode.Line;
         }
 
         private static void WriteLog()
