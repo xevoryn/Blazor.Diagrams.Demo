@@ -73,16 +73,21 @@ namespace DiagramDemo.Client.Pages
 
             _diagram.Links.Added += OnDiagramLinksAdded;
             _diagram.MouseClick += OnDiagramMouseClick;
+            _diagram.MouseDown += OnDiagramMouseDown;
+            _diagram.MouseUp += OnDiagramMouseUp;
             _diagram.SelectionChanged += OnDiagramSelectionChanged;
         }
 
         protected override void OnAfterRender(bool firstRender)
         {
             PerfLoggr.Log($"Demo.OnAfterRender({firstRender})");
+            DataHoldingService.Add($"OnAfterRender({firstRender})");
         }
 
         private void OnContainerMouseDown(MouseEventArgs args)
         {
+            DataHoldingService.Add($"OnDiagramSelectionChanged()");
+
             if (args.Button != 0)
                 return;
 
@@ -91,20 +96,36 @@ namespace DiagramDemo.Client.Pages
 
         private void OnDiagramLinksAdded(BaseLinkModel link)
         {
+            DataHoldingService.Add($"OnDiagramSelectionChanged()");
+
             link.SourceMarker = LinkMarker.NewSquare(6);
             link.TargetMarker = LinkMarker.Arrow;
         }
 
         private void OnDiagramMouseClick(Model model, MouseEventArgs e)
         {
+            DataHoldingService.Add($"OnDiagramMouseClick()");
+
             if (model is FunctionBlockPort)
                 _diagram.UnselectAll();
             else if (model == null)
                 UIState.DeselectConnectors();
         }
 
+        private void OnDiagramMouseDown(Model model, MouseEventArgs e)
+        {
+            DataHoldingService.Add($"OnDiagramMouseDown()");
+        }
+
+        private void OnDiagramMouseUp(Model model, MouseEventArgs e)
+        {
+            DataHoldingService.Add($"OnDiagramMouseUp()");
+        }
+
         private void OnDiagramSelectionChanged(SelectableModel model)
         {
+            DataHoldingService.Add($"OnDiagramSelectionChanged()");
+
             // Da ein Connector (Port) kein SelectableModel ist und somit dessen Selektion nicht vom Diagramm verwaltet wird,
             // können wir alle Connectors deselektieren wenn sich hier die Selektion ändert.
             if (model != null)
@@ -113,6 +134,8 @@ namespace DiagramDemo.Client.Pages
 
         protected override void OnInitialized()
         {
+            DataHoldingService.Add($"OnDiagramSelectionChanged()");
+
             base.OnInitialized();
             InitializeDiagram();
         }
